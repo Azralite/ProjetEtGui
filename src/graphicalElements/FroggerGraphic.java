@@ -1,19 +1,15 @@
 package graphicalElements;
 
-import javax.swing.*;
-
-import gameCommons.IFrog;
 import gameCommons.Direction;
+import gameCommons.IFrog;
+import jaco.mp3.player.MP3Player;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import jaco.mp3.a.D;
-import jaco.mp3.player.MP3Player;
 
 
 public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListener {

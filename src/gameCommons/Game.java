@@ -1,12 +1,11 @@
 package gameCommons;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Random;
-
 import environment.Lane;
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 

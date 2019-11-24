@@ -1,10 +1,10 @@
 package frog;
 
+import gameCommons.Case;
+import gameCommons.Direction;
 import gameCommons.Game;
 import gameCommons.IFrog;
 import graphicalElements.Element;
-import gameCommons.Case;
-import gameCommons.Direction;
 
 import javax.swing.*;
 import java.awt.*;

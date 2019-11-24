@@ -1,8 +1,9 @@
 package environment;
 
-import java.util.ArrayList;
 import gameCommons.Case;
 import gameCommons.Game;
+
+import java.util.ArrayList;
 
 public class Lane {
     private Game game;

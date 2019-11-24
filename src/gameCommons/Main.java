@@ -1,14 +1,5 @@
 package gameCommons;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
-import environment.Environment;
-import frog.Frog;
-import graphicalElements.FroggerGraphic;
-import graphicalElements.IFroggerGraphics;
 import graphicalElements.Menu;
 
 

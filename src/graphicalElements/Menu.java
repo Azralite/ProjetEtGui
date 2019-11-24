@@ -1,13 +1,15 @@
 package graphicalElements;
 
-import javax.swing.*;
-
 import environment.Environment;
 import frog.Frog;
-import gameCommons.*;
+import gameCommons.Game;
+import gameCommons.IEnvironment;
+import gameCommons.IFrog;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Menu extends JFrame implements IMenu  {
     private int width;

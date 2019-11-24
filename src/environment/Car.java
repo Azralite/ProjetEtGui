@@ -1,12 +1,11 @@
 package environment;
 
-import java.awt.Color;
 import gameCommons.Case;
 import gameCommons.Game;
 import graphicalElements.Element;
 
 import javax.swing.*;
-import java.awt.Image;
+import java.awt.*;
 
 public class Car {
     private Game game;
