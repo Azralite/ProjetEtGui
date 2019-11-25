@@ -3,6 +3,7 @@ package gameCommons;
 import environment.Lane;
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
+import graphicalElements.Menu;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,6 +24,7 @@ public class Game {
     private IEnvironment environment;
     private IFrog frog;
     private IFroggerGraphics graphic;
+    private Menu menu;
 
     /**
      *
@@ -37,12 +39,14 @@ public class Game {
      * @param defaultDensity
      *            densite de voiture utilisee par defaut pour les routes
      */
-    public Game(IFroggerGraphics graphic, int width, int height, int minSpeedInTimerLoop, double defaultDensity) {
+    public Game(IFroggerGraphics graphic, int width, int height, int minSpeedInTimerLoop, double defaultDensity, Menu a) {
         this.graphic = graphic;
         this.width = width;
         this.height = height;
         this.minSpeedInTimerLoops = minSpeedInTimerLoop;
         this.defaultDensity = defaultDensity;
+
+        this.menu = a;
     }
 
     /**
@@ -81,7 +85,7 @@ public class Game {
      */
     public boolean testWin() {
         if (this.environment.isWinningPosition(this.frog.getPosition())) {
-            this.graphic.endGameScreen("You Win", temps, false);
+            this.graphic.endGameScreen("You Win \n", temps, (this.frog.getLanePos()),graphic.getInfinity(), true);
             return true;
         } else {
             return false;
@@ -97,7 +101,7 @@ public class Game {
      */
     public boolean testLose() {
         if (!this.environment.isSafe(this.frog.getPosition()) || this.environment.isOut(this.frog.getPosition())) {
-            this.graphic.endGameScreen("You Lose. Score = " + (this.frog.getLanePos() -1 ),0, false);
+            this.graphic.endGameScreen("You Lose \n " ,temps,  (this.frog.getLanePos()), graphic.getInfinity(), false);
             return true;
         } else {
             return false;
@@ -113,8 +117,14 @@ public class Game {
         this.graphic.clear();
         this.environment.update();
         this.graphic.add(new Element(this.frog.getPosition(), this.frog.getImage()));
-        this.testLose();
-        this.testWin();
+        if(testLose()){
+            menu.timer.stop();
+            menu.setVisible(false);
+        }
+        if (testWin()){
+            menu.timer.stop();
+            menu.setVisible(false);
+        }
         temps += 0.1;
     }
 

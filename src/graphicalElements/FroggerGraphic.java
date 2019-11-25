@@ -6,6 +6,8 @@ import jaco.mp3.player.MP3Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -19,12 +21,13 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
     private int height;
     private IFrog frog;
     private JFrame frame;
+    private JFrame endFrame;
     public boolean end = false;
     private Image image;
     private Image backG;
     private boolean infinity;
     private JLabel icon = new JLabel(new ImageIcon("src/ressource/titre.png"));
-
+    private Menu menu;
 
 
 
@@ -32,7 +35,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         this.width = width;
         this.height = height;
         elementsToDisplay = new ArrayList<>();
-        //this.menu = a;
+        this.menu = a;
         this.infinity = inf;
 
         if (musique){
@@ -162,66 +165,106 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         this.frog = frog;
     }
 
-    public void endGameScreen(String s, double temps, boolean inf) {
+    public void endGameScreen(String s, double temps, int score,  boolean inf, boolean win) {
+
         Integer a = (int)temps;
         String time = a.toString();
         this.end = true;
         frame.remove(this);
+
         frame.setVisible(false);
 
-        JFrame test = new JFrame("Frogger");
-        test.setSize(width * 32, height*32);
-        test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        endFrame = new JFrame("Frogger");
+        endFrame.setSize(width * 32, height*32);
+        endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        test.setLocation((dim.width/2) - (width*32)/2, (dim.height/2)-(height*32/2));
+        endFrame.setLocation((dim.width/2) - (width*32)/2, (dim.height/2)-(height*32/2));
+        endFrame.setBackground(Color.GRAY);
 
 
         //Logo
         JPanel nord = new JPanel();
+        nord.setBackground(Color.GRAY);
         JLabel merci = new JLabel("Merci d'avoir joué");
-        nord.add(icon, BorderLayout.NORTH);
-        nord.add(merci, BorderLayout.SOUTH);
+        nord.add(icon, BorderLayout.CENTER);
+//        nord.add(merci, BorderLayout.EAST);
 
         //Choix pour restart
         JPanel choix = new JPanel();
+        choix.setBackground(Color.GRAY);
         JButton replay = new JButton("Replay");
         JButton exit = new JButton("Exit");
+
+        replay.addActionListener(new ButonReplayListener());
+        exit.addActionListener(new ButonExitListener());
+
+
         choix.add(replay, BorderLayout.NORTH);
         choix.add(exit,BorderLayout.SOUTH);
 
         //Credit
         JPanel sud = new JPanel();
+        sud.setBackground(Color.GRAY);
         JLabel credit = new JLabel("Fait par Gaëtan Serre et Paul Michel dit Ferrer");
+        sud.add(credit, BorderLayout.SOUTH);
 
         //Score
-        JPanel score = new JPanel();
+        JPanel scorePan = new JPanel();
+        scorePan.setBackground(Color.GRAY);
         JLabel label = new JLabel(s);
         if (inf){
-            label.setText(s);
+            label.setText("Score : " + score);
         }else {
-            label.setText(s + " \n Vous avez mis :" + time + " s");
+            if (win){
+                label.setText(s + " \n Vous avez mis :" + time + " s");
+            }
+            else {
+                label.setText(s);
+            }
         }
         label.setFont(new Font("Verdana", 1, 20));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setSize(this.getSize());
-        score.add(label, BorderLayout.CENTER);
+        scorePan.add(label, BorderLayout.CENTER);
 
         JPanel centre = new JPanel();
+        centre.setBackground(Color.GRAY);
         centre.add(choix, BorderLayout.SOUTH);
-        centre.add(score, BorderLayout.NORTH);
+        centre.add(scorePan, BorderLayout.NORTH);
 
         JPanel res = new JPanel();
-        res.add(nord, BorderLayout.NORTH);
+        res.setBackground(Color.GRAY);
+        //res.add(nord, BorderLayout.NORTH);
         res.add(centre, BorderLayout.CENTER);
-        res.add(sud, BorderLayout.SOUTH);
-        test.getContentPane().add(res);
-        test.repaint();
-        test.setVisible(true);
+        //res.add(sud, BorderLayout.SOUTH);
+
+
+        endFrame.setBackground(Color.GRAY);
+        endFrame.getContentPane().add(nord, BorderLayout.NORTH);
+        endFrame.getContentPane().add(centre, BorderLayout.CENTER);
+        endFrame.getContentPane().add(sud,BorderLayout.SOUTH);
+        endFrame.setVisible(true);
     }
 
 
     public boolean getEnd(){
         return this.end;
     }
+
+    class ButonReplayListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            endFrame.dispose();
+            menu.replay();
+        }
+    }
+
+    class ButonExitListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            System.exit(0);
+        }
+    }
+
 
 }

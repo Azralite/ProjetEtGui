@@ -22,6 +22,7 @@ public class Menu extends JFrame implements IMenu  {
     private int minSpeedInTimerLoops;
     private double defaultDensity;
     private double temps = 0;
+    public Timer timer;
 
     private IFroggerGraphics graphic;
 
@@ -109,7 +110,7 @@ public class Menu extends JFrame implements IMenu  {
 
         this.graphic = new  FroggerGraphic(width,height,true, this, this,  infinity);
         //Création de la partie
-        Game game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity);
+        Game game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity, this);
         //Création et liason de la grenouille
         IFrog frog = new Frog(game);
         game.setFrog(frog);
@@ -118,7 +119,7 @@ public class Menu extends JFrame implements IMenu  {
         IEnvironment env = new Environment(game, frog);
         game.setEnvironment(env);
         //Boucle principale : l'environnement s'acturalise tous les tempo milisecondes
-        Timer timer = new Timer(tempo, new ActionListener() {
+        this.timer = new Timer(tempo, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 game.update();
@@ -130,40 +131,43 @@ public class Menu extends JFrame implements IMenu  {
     }
 
 
-
-    public void end(){
-        System.out.println(0);
-//        graphic.clear();
-//        graphic.repaint();
-        this.remove(this.panJeu);
-        this.repaint();
-
-        JButton replay = new JButton("Replay");
-        JButton exit = new JButton("Exit");
-        JButton son = new JButton("Couper le son");
-
-        replay.addActionListener(new BoutonReplayListener());
-        exit.addActionListener(new BoutonExitListener());
-
-        panFin.setBackground(Color.GRAY);
-        panFin.setLayout(new BorderLayout());
-
-        JPanel nord = nord();
-        JPanel centre = centreFin(replay,exit);
-        JPanel sud = sud();
-
-
-        panMenu.setBackground(Color.GRAY);
-        panMenu.setLayout(new BorderLayout());
-        panMenu.add(nord,BorderLayout.NORTH);
-        panMenu.add(centre, BorderLayout.CENTER);
-        panMenu.add(sud,BorderLayout.SOUTH);
-
-        this.getContentPane().add(panMenu);
-//        this.pack();
-        this.setVisible(true);
-//        this.addKeyListener(this);
+    public void replay(){
+        new Menu(width, height, tempo, minSpeedInTimerLoops, defaultDensity);
     }
+
+//    public void end(){
+//        System.out.println(0);
+////        graphic.clear();
+////        graphic.repaint();
+//        this.remove(this.panJeu);
+//        this.repaint();
+//
+//        JButton replay = new JButton("Replay");
+//        JButton exit = new JButton("Exit");
+//        JButton son = new JButton("Couper le son");
+//
+//        replay.addActionListener(new BoutonReplayListener());
+//        exit.addActionListener(new BoutonExitListener());
+//
+//        panFin.setBackground(Color.GRAY);
+//        panFin.setLayout(new BorderLayout());
+//
+//        JPanel nord = nord();
+//        JPanel centre = centreFin(replay,exit);
+//        JPanel sud = sud();
+//
+//
+//        panMenu.setBackground(Color.GRAY);
+//        panMenu.setLayout(new BorderLayout());
+//        panMenu.add(nord,BorderLayout.NORTH);
+//        panMenu.add(centre, BorderLayout.CENTER);
+//        panMenu.add(sud,BorderLayout.SOUTH);
+//
+//        this.getContentPane().add(panMenu);
+////        this.pack();
+//        this.setVisible(true);
+////        this.addKeyListener(this);
+//    }
 
     class BoutonListener implements ActionListener{
         @Override

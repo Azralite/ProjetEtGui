@@ -33,7 +33,7 @@ public interface IFroggerGraphics {
      *
      * @param message le texte à afficher
      */
-    public void endGameScreen(String message, double temps, boolean inf);
+    public void endGameScreen(String message, double temps,int score, boolean inf, boolean win);
 
     public boolean getInfinity();
 

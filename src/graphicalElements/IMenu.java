@@ -16,5 +16,7 @@ public interface IMenu {
 
     public void start(boolean infinity);
 
-    public void end();
+    public void replay();
+
+    //public void end();
 }
