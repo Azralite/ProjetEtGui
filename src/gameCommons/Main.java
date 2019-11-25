@@ -13,15 +13,8 @@ public class Main {
         int tempo = 100;
         int minSpeedInTimerLoops = 3;
         double defaultDensity = 0.04;
-        double temps = 0;
 
         //Creation du menu
-        Menu menu = new Menu(width,height, tempo, minSpeedInTimerLoops, defaultDensity);
-
-
-//
-
+        new Menu(width,height, tempo, minSpeedInTimerLoops, defaultDensity);
     }
-
-
 }

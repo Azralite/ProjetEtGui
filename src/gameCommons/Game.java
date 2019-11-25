@@ -125,7 +125,7 @@ public class Game {
             menu.timer.stop();
             menu.setVisible(false);
         }
-        temps += 0.1;
+        temps += 100;
     }
 
     public void move_lanes(int n){

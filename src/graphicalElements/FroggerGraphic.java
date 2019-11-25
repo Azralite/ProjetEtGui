@@ -28,6 +28,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
     private boolean infinity;
     private JLabel icon = new JLabel(new ImageIcon("src/ressource/titre.png"));
     private Menu menu;
+    private MP3Player player;
 
 
 
@@ -39,7 +40,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         this.infinity = inf;
 
         if (musique){
-            MP3Player player = new MP3Player();
+            player = new MP3Player();
 
             player.setRepeat(true);
 
@@ -166,7 +167,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
     }
 
     public void endGameScreen(String s, double temps, int score,  boolean inf, boolean win) {
-
+        player.stop();
         Integer a = (int)temps;
         String time = a.toString();
         this.end = true;
@@ -179,38 +180,30 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         endFrame.setLocation((dim.width/2) - (width*32)/2, (dim.height/2)-(height*32/2));
-        endFrame.setBackground(Color.GRAY);
 
 
         //Logo
         JPanel nord = new JPanel();
-        nord.setBackground(Color.GRAY);
-        JLabel merci = new JLabel("Merci d'avoir joué");
+        //nord.setBackground(Color.GRAY);
         nord.add(icon, BorderLayout.CENTER);
-//        nord.add(merci, BorderLayout.EAST);
 
         //Choix pour restart
         JPanel choix = new JPanel();
-        choix.setBackground(Color.GRAY);
+        choix.setLayout(new GridLayout(1,2,1,0));
         JButton replay = new JButton("Replay");
         JButton exit = new JButton("Exit");
-
         replay.addActionListener(new ButonReplayListener());
         exit.addActionListener(new ButonExitListener());
-
-
-        choix.add(replay, BorderLayout.NORTH);
-        choix.add(exit,BorderLayout.SOUTH);
+        choix.add(replay, BorderLayout.WEST);
+        choix.add(exit,BorderLayout.EAST);
 
         //Credit
         JPanel sud = new JPanel();
-        sud.setBackground(Color.GRAY);
-        JLabel credit = new JLabel("Fait par Gaëtan Serre et Paul Michel dit Ferrer");
-        sud.add(credit, BorderLayout.SOUTH);
+        JLabel credit = new JLabel(" Merci d'avoir joué \n Fait par Gaëtan Serre et Paul Michel dit Ferrer");
+        sud.add(credit);
 
         //Score
         JPanel scorePan = new JPanel();
-        scorePan.setBackground(Color.GRAY);
         JLabel label = new JLabel(s);
         if (inf){
             label.setText("Score : " + score);
@@ -222,24 +215,19 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
                 label.setText(s);
             }
         }
-        label.setFont(new Font("Verdana", 1, 20));
+        label.setFont(new Font("Verdana", 1, 40));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setSize(this.getSize());
         scorePan.add(label, BorderLayout.CENTER);
 
         JPanel centre = new JPanel();
-        centre.setBackground(Color.GRAY);
-        centre.add(choix, BorderLayout.SOUTH);
+        centre.setLayout(new GridLayout(2,1,0,5));
+        centre.setPreferredSize(new Dimension(width*32/2,height));
         centre.add(scorePan, BorderLayout.NORTH);
-
-        JPanel res = new JPanel();
-        res.setBackground(Color.GRAY);
-        //res.add(nord, BorderLayout.NORTH);
-        res.add(centre, BorderLayout.CENTER);
-        //res.add(sud, BorderLayout.SOUTH);
+        centre.add(choix, BorderLayout.SOUTH);
 
 
-        endFrame.setBackground(Color.GRAY);
+        endFrame.setBackground(Color.BLUE);
         endFrame.getContentPane().add(nord, BorderLayout.NORTH);
         endFrame.getContentPane().add(centre, BorderLayout.CENTER);
         endFrame.getContentPane().add(sud,BorderLayout.SOUTH);

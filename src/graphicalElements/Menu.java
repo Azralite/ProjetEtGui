@@ -104,11 +104,10 @@ public class Menu extends JFrame implements IMenu  {
     }
     public void start(boolean infinity){
         //Création de l'interface graphique
-        //IFroggerGraphics graphic = new FroggerGraphic(width, height,true);
         this.remove(panMenu);
         this.repaint();
 
-        this.graphic = new  FroggerGraphic(width,height,true, this, this,  infinity);
+        IFroggerGraphics graphic = new  FroggerGraphic(width,height,true, this, this,  infinity);
         //Création de la partie
         Game game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity, this);
         //Création et liason de la grenouille
@@ -135,39 +134,6 @@ public class Menu extends JFrame implements IMenu  {
         new Menu(width, height, tempo, minSpeedInTimerLoops, defaultDensity);
     }
 
-//    public void end(){
-//        System.out.println(0);
-////        graphic.clear();
-////        graphic.repaint();
-//        this.remove(this.panJeu);
-//        this.repaint();
-//
-//        JButton replay = new JButton("Replay");
-//        JButton exit = new JButton("Exit");
-//        JButton son = new JButton("Couper le son");
-//
-//        replay.addActionListener(new BoutonReplayListener());
-//        exit.addActionListener(new BoutonExitListener());
-//
-//        panFin.setBackground(Color.GRAY);
-//        panFin.setLayout(new BorderLayout());
-//
-//        JPanel nord = nord();
-//        JPanel centre = centreFin(replay,exit);
-//        JPanel sud = sud();
-//
-//
-//        panMenu.setBackground(Color.GRAY);
-//        panMenu.setLayout(new BorderLayout());
-//        panMenu.add(nord,BorderLayout.NORTH);
-//        panMenu.add(centre, BorderLayout.CENTER);
-//        panMenu.add(sud,BorderLayout.SOUTH);
-//
-//        this.getContentPane().add(panMenu);
-////        this.pack();
-//        this.setVisible(true);
-////        this.addKeyListener(this);
-//    }
 
     class BoutonListener implements ActionListener{
         @Override
