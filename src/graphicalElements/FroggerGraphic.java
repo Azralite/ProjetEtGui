@@ -1,5 +1,7 @@
 package graphicalElements;
 
+import Score2.SimpleFrameTest;
+import Score2.SimpleFrameTestTime;
 import gameCommons.Direction;
 import gameCommons.IFrog;
 import jaco.mp3.player.MP3Player;
@@ -22,13 +24,15 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
     private IFrog frog;
     private JFrame frame;
     private JFrame endFrame;
-    public boolean end = false;
     private Image image;
     private Image backG;
     private boolean infinity;
     private JLabel icon = new JLabel(new ImageIcon("src/ressource/titre.png"));
     private Menu menu;
     private MP3Player player;
+    private int a;
+    private double temps;
+
 
 
 
@@ -62,13 +66,13 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
         this.frame = frame;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((dim.width/2) - (width*pixelByCase)/2, (dim.height/2)-(height*pixelByCase/2));
         frame.getContentPane().add(this);
         frame.pack();
         frame.setVisible(true);
         frame.addKeyListener(this);
-        //drawBackground();
     }
 
     public boolean getInfinity(){return infinity;}
@@ -77,7 +81,6 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         if (!infinity) {
             for (int a = 0; a < width * pixelByCase; a += pixelByCase) {
                 g.drawImage(backG, a, 0, this);
-                //g.drawImage(backG,a,height-pixelByCase,this);
             }
             for (int i = pixelByCase; i < (height - 1) * pixelByCase; i += pixelByCase) {
                 for (int j = 0; j < width * pixelByCase; j += pixelByCase) {
@@ -98,19 +101,10 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         super.paintComponent(g);
         drawBackground(g);
         for (Element e : elementsToDisplay) {
-//            g.setColor(e.color);
-//            g.fillRect(pixelByCase * e.absc, pixelByCase * (height - 1 - e.ord), pixelByCase, pixelByCase - 1);
             g.drawImage(e.image,pixelByCase * e.absc,pixelByCase * (height - 1 - e.ord),this);
         }
     }
 
-//    public int getWidth(){
-//        return this.width;
-//    }
-//
-//    public int getHeight(){
-//        return this.height;
-//    }
     public int getPixelByCase(){
         return this.pixelByCase;
     }
@@ -168,16 +162,19 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
     public void endGameScreen(String s, double temps, int score,  boolean inf, boolean win) {
         player.stop();
-        Integer a = (int)temps;
-        String time = a.toString();
-        this.end = true;
+        Double temp = temps/1000;
+        this.temps = temp;
+        String time = temp.toString();
         frame.remove(this);
+
+        this.a = score;
 
         frame.setVisible(false);
 
         endFrame = new JFrame("Frogger");
         endFrame.setSize(width * 32, height*32);
         endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        endFrame.setResizable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         endFrame.setLocation((dim.width/2) - (width*32)/2, (dim.height/2)-(height*32/2));
 
@@ -190,12 +187,25 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         //Choix pour restart
         JPanel choix = new JPanel();
         choix.setLayout(new GridLayout(1,2,1,0));
+        JButton scoreButton = new JButton("Meilleurs Score");
+        JButton scoreInfButton = new JButton("Meilleurs Score");
         JButton replay = new JButton("Replay");
         JButton exit = new JButton("Exit");
         replay.addActionListener(new ButonReplayListener());
         exit.addActionListener(new ButonExitListener());
-        choix.add(replay, BorderLayout.WEST);
+        scoreButton.addActionListener(new ButtonScoreListener());
+        scoreInfButton.addActionListener(new ButtonScoreInfListener());
+
+        if(inf){
+            choix.add(scoreInfButton, BorderLayout.WEST);
+        }
+        else {
+            choix.add(scoreButton, BorderLayout.WEST);
+        }
+        choix.add(replay, BorderLayout.CENTER);
         choix.add(exit,BorderLayout.EAST);
+
+
 
         //Credit
         JPanel sud = new JPanel();
@@ -227,17 +237,22 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         centre.add(choix, BorderLayout.SOUTH);
 
 
-        endFrame.setBackground(Color.BLUE);
         endFrame.getContentPane().add(nord, BorderLayout.NORTH);
         endFrame.getContentPane().add(centre, BorderLayout.CENTER);
         endFrame.getContentPane().add(sud,BorderLayout.SOUTH);
         endFrame.setVisible(true);
+        if (inf){
+            JLabel username = new JLabel("Votre score : " + this.a);
+            SimpleFrameTest sd = new SimpleFrameTest(username, this.a);
+            sd.initComponents(username, this.a);
+        }
+        else if(win){
+            JLabel username = new JLabel("Votre temps : " + this.temps);
+            SimpleFrameTestTime sd = new SimpleFrameTestTime(username, this.temps);
+            sd.initComponents(username, this.temps);
+        }
     }
 
-
-    public boolean getEnd(){
-        return this.end;
-    }
 
     class ButonReplayListener implements ActionListener{
         @Override
@@ -254,5 +269,17 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
         }
     }
 
+    class ButtonScoreListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+           SimpleFrameTestTime.showScore();
+        }
+    }
 
+    class ButtonScoreInfListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            SimpleFrameTest.showScore();
+        }
+    }
 }

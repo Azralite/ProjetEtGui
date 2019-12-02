@@ -30,20 +30,8 @@ public class Lane {
 
     }
 
-    // TODO : Constructeur(s)
 
     public void update() {
-
-        // TODO
-
-        // Toutes les voitures se déplacent d'une case au bout d'un nombre "tic
-        // d'horloge" égal à leur vitesse
-        // Notez que cette méthode est appelée à chaque tic d'horloge
-
-        // Les voitures doivent etre ajoutes a l interface graphique meme quand
-        // elle ne bougent pas
-
-        // A chaque tic d'horloge, une voiture peut être ajoutée
 
         this.timer++;
         if (this.timer <= this.speed) {
@@ -56,10 +44,7 @@ public class Lane {
         for (Car c : cars){
             c.setOrd(ord);
         }
-
     }
-
-    // TODO : ajout de methodes
 
 
     private void moveCars(boolean b) {
@@ -92,11 +77,6 @@ public class Lane {
     }
 
 
-
-    /*
-     * Fourni : mayAddCar(), getFirstCase() et getBeforeFirstCase()
-     */
-
     /**
      * Ajoute une voiture au début de la voie avec probabilité égale à la
      * densité, si la première case de la voie est vide
@@ -109,6 +89,11 @@ public class Lane {
         }
     }
 
+    /**
+     * Renvoie la première case
+     * @return 0 si l'on va de la gauche vers la droite
+     * @return game.width -1 sinon
+     */
     private Case getFirstCase() {
         if (leftToRight) {
             return new Case(0, ord);
@@ -116,6 +101,11 @@ public class Lane {
             return new Case(game.width - 1, ord);
     }
 
+    /**
+     *Renvoie la case avant la première cases
+     * @return -1 si l'on va de la gauche vers la droite
+     * @return game.width sinon
+     */
     private Case getBeforeFirstCase() {
         if (leftToRight) {
             return new Case(-1, ord);
@@ -123,8 +113,18 @@ public class Lane {
             return new Case(game.width, ord);
     }
 
-    public int getOrd(){return this.ord;}
+    /**
+     * Renvoie l'ordonné de la ligne
+     * @return this.ord
+     */
+    public int getOrd(){
+        return this.ord;
+    }
 
+    /**
+     * Defini l'ordonné de la ligne
+     * @param n le nouvel indice de ligne
+     */
     public void setOrd(int n){this.ord = n;}
 
 }

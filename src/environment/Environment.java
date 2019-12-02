@@ -28,14 +28,15 @@ public class Environment implements IEnvironment {
                 else if(i == (this.game.height/2) - 1 || i == (this.game.height/2)) {
                     rivers.add(new River(game, i, 0.2D, leftToRight));
                     leftToRight = !leftToRight;
-                    voies.add(new Lane(game, i, 0.0D));
+                    //voies.add(new Lane(game, i, 0.0D));
                 }
                 else
                     voies.add(new Lane(game, i, this.game.defaultDensity));
             }
         }
         else {
-            for(int i = 0; i<this.game.height; i++){
+            voies.add(new Lane(game,0,0.0D));
+            for(int i = 1; i<this.game.height; i++){
                 voies.add(new Lane(game, i, this.game.defaultDensity));
             }
         }

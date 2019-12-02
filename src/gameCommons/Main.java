@@ -12,7 +12,7 @@ public class Main {
         int height = 20;
         int tempo = 100;
         int minSpeedInTimerLoops = 3;
-        double defaultDensity = 0.04;
+        double defaultDensity = 0.08;
 
         //Creation du menu
         new Menu(width,height, tempo, minSpeedInTimerLoops, defaultDensity);

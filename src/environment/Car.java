@@ -12,8 +12,6 @@ public class Car {
     private Case leftPosition;
     private boolean leftToRight;
     private int length;
-    private final Color colorLtR = Color.BLACK;
-    private final Color colorRtL = Color.BLUE;
     private Image image;
 
     public Car(Game game, Case frontPosition, boolean leftToRight) {
@@ -60,15 +58,6 @@ public class Car {
 
     /* Fourni : addToGraphics() permettant d'ajouter un element graphique correspondant a la voiture*/
     private void addToGraphics() {
-        /* //Si on veut revenir au couleur de base
-        for (int i = 0; i < length; i++) {
-            Color color = colorRtL;
-            if (this.leftToRight){
-                color = colorLtR;
-            }
-            game.getGraphic().add(new Element(leftPosition.absc + i, leftPosition.ord, color));
-        }
-         */
         game.getGraphic().add(new Element(leftPosition.absc , leftPosition.ord, this.image));
     }
 

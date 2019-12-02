@@ -85,7 +85,6 @@ public class Game {
      */
     public boolean testWin() {
         if (this.environment.isWinningPosition(this.frog.getPosition())) {
-            this.graphic.endGameScreen("You Win \n", temps, (this.frog.getLanePos()),graphic.getInfinity(), true);
             return true;
         } else {
             return false;
@@ -101,7 +100,6 @@ public class Game {
      */
     public boolean testLose() {
         if (!this.environment.isSafe(this.frog.getPosition()) || this.environment.isOut(this.frog.getPosition())) {
-            this.graphic.endGameScreen("You Lose \n " ,temps,  (this.frog.getLanePos()), graphic.getInfinity(), false);
             return true;
         } else {
             return false;
@@ -119,10 +117,12 @@ public class Game {
         this.graphic.add(new Element(this.frog.getPosition(), this.frog.getImage()));
         if(testLose()){
             menu.timer.stop();
+            this.graphic.endGameScreen("You Lose \n " ,temps,  (this.frog.getLanePos()), graphic.getInfinity(), false);
             menu.setVisible(false);
         }
         if (testWin()){
             menu.timer.stop();
+            this.graphic.endGameScreen("You Win \n", temps, (this.frog.getLanePos()),graphic.getInfinity(), true);
             menu.setVisible(false);
         }
         temps += 100;
@@ -140,6 +140,7 @@ public class Game {
             l.setOrd(l.getOrd() + n);
             voies.set(i, l);
         }*/
+
         voies.add(new Lane(this, this.height-1, this.defaultDensity));
     }
 

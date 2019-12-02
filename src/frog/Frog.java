@@ -124,7 +124,6 @@ public class Frog implements IFrog {
             this.position = new Case(this.position.absc - 1, this.position.ord);
         }
 
-        this.game.getGraphic().add(new Element(this.position, Color.RED));
         this.game.testWin();
         this.game.testLose();
     }

@@ -15,16 +15,12 @@ public class Menu extends JFrame implements IMenu  {
     private int width;
     private int height;
     private JPanel panMenu = new JPanel();
-    private JPanel panFin = new JPanel();
-    private JPanel panJeu;
     private JLabel icon = new JLabel(new ImageIcon("src/ressource/titre.png"));
     private int tempo;
     private int minSpeedInTimerLoops;
     private double defaultDensity;
-    private double temps = 0;
     public Timer timer;
 
-    private IFroggerGraphics graphic;
 
 
     public Menu(int width, int height, int tempo, int minSpeedInTimerLoops, double defaultDensity){
@@ -35,6 +31,7 @@ public class Menu extends JFrame implements IMenu  {
         this.defaultDensity = defaultDensity;
 
         this.setTitle("Frogger");
+        this.setResizable(false);
         this.setSize(width * 32, height*32);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -83,8 +80,8 @@ public class Menu extends JFrame implements IMenu  {
         JButton infini = new JButton("Mode Infini");
         JButton son = new JButton("Couper le son");
 
-        classique.addActionListener(new BoutonListener());
-        infini.addActionListener(new Bouton2Listener());
+        classique.addActionListener(new BoutonPlayListener());
+        infini.addActionListener(new BoutonPlayInfListener());
 
         JPanel nord = nord();
         JPanel centre = centre(classique,infini);
@@ -98,10 +95,10 @@ public class Menu extends JFrame implements IMenu  {
         panMenu.add(sud,BorderLayout.SOUTH);
 
         this.getContentPane().add(panMenu);
-//        this.pack();
         this.setVisible(true);
-//        this.addKeyListener(this);
     }
+
+
     public void start(boolean infinity){
         //Création de l'interface graphique
         this.remove(panMenu);
@@ -135,7 +132,7 @@ public class Menu extends JFrame implements IMenu  {
     }
 
 
-    class BoutonListener implements ActionListener{
+    class BoutonPlayListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             setVisible(false);
@@ -143,7 +140,7 @@ public class Menu extends JFrame implements IMenu  {
         }
     }
 
-    class Bouton2Listener implements ActionListener{
+    class BoutonPlayInfListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             setVisible(false);
@@ -151,19 +148,6 @@ public class Menu extends JFrame implements IMenu  {
         }
     }
 
-    class BoutonReplayListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            menuPanel();
-        }
-    }
-
-    class BoutonExitListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            setVisible(false);
-        }
-    }
 
 }
 

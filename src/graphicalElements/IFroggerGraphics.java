@@ -35,13 +35,17 @@ public interface IFroggerGraphics {
      */
     public void endGameScreen(String message, double temps,int score, boolean inf, boolean win);
 
+    /**
+     * Indique si le jeu est en mode infini
+     * @return true si le jeu est en infini
+     */
     public boolean getInfinity();
 
-    public boolean getEnd();
-
-//    public int getWidth();
-//
-//    public int getHeight();
-
+    /**
+     * Donne le nb de pixel par case
+     * Utile pour définir les tailles des fenêtres
+     * @return pixelByCase
+     */
     public int getPixelByCase();
+
 }
